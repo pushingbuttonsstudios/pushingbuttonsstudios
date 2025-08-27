@@ -1,0 +1,373 @@
+/* Base / reset-ish */
+:root{
+  --bg: #000000;
+  --max-content-width: 1100px;
+  --site-padding: 24px;
+  --menu-width: 300px;
+  --transition-speed: 450ms;
+}
+
+/* Basic reset for comfortable defaults */
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#eee;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  scroll-behavior:smooth;
+}
+
+/* Header + hamburger */
+.topbar{
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:0 20px;
+  z-index:100;
+  pointer-events:none;
+}
+.logo{position:absolute; left:20px; font-weight:600; color:rgba(255,255,255,0.9); pointer-events:auto}
+.hamburger{
+  pointer-events:auto;
+  background:none;
+  border:0;
+  cursor:pointer;
+  padding:10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  z-index:110;
+  width:56px;
+  height:56px;
+  border-radius:8px;
+}
+.hamburger-box{display:inline-block; width:30px; height:24px; position:relative;}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
+  display:block;
+  position:absolute;
+  height:3px;
+  width:100%;
+  background: #fff;
+  border-radius:3px;
+  transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+}
+.hamburger-inner{top:50%; transform:translateY(-50%);}
+.hamburger-inner::before{content:""; top:-9px;}
+.hamburger-inner::after{content:""; top:9px;}
+
+/* NAV: right-side panel */
+.nav-overlay{
+  position:fixed;
+  top:0;
+  right:0;
+  height:100vh;
+  width:33.333vw;
+  max-width:420px;
+  min-width:260px;
+  background:var(--bg);
+  border-left:1px solid rgba(255,255,255,0.04);
+  padding:40px 28px;
+  transform:translateX(110%);
+  transition: transform 420ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+  opacity:0;
+  z-index:120;
+  pointer-events:none;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+}
+
+/* open state (slide in) */
+.nav-overlay.open{
+  transform:translateX(0);
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* list + items */
+.nav-overlay ul{ list-style:none; margin:0; padding:0; width:100%; }
+.nav-overlay li{ margin:20px 0; }
+
+/* menu links */
+.nav-overlay a{
+  display:inline-block;
+  font-family: "Gantari", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: clamp(20px, 4.5vw, 50px);
+  letter-spacing: 0.01em;
+  transition: opacity 180ms ease, transform 180ms ease;
+  opacity: 1;
+}
+.nav-overlay a:hover, .nav-overlay a:focus, .nav-overlay a:active{
+  opacity: 0.65;
+  transform: translateX(-6px);
+  outline: none;
+}
+@media (max-width:520px){ .nav-overlay{ width:60vw; min-width:200px; max-width:360px; padding:30px 20px; } }
+
+/* HERO */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:560px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* slideshow absolute layer */
+.slideshow{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  will-change:transform, opacity;
+}
+
+/* each slide element */
+.slide{
+  position:absolute;
+  inset:0;
+  background-position:center;
+  background-size:cover;
+  opacity:0;
+  transform:scale(1.04);
+  transition:opacity 1200ms ease, transform 900ms ease;
+  filter: blur(40px) saturate(1.05);
+  will-change:opacity, transform;
+}
+.slide.show{
+  opacity:1;
+  transform:scale(1.0);
+}
+
+/* Hero text container */
+.hero-content{
+  position:relative;
+  z-index:10;
+  text-align:center;
+  padding:0 20px;
+  max-width:var(--max-content-width);
+}
+
+/* fonts classes */
+.source-serif-4-heading{
+  font-family: "Antic Didone", serif;
+  font-optical-sizing: auto;
+  font-weight:500;
+  margin:0;
+  letter-spacing:0.02em;
+  line-height:0.95;
+  text-transform:uppercase;
+  font-size:clamp(36px, 11vw, 160px);
+}
+
+/* byline */
+.gantari-byline{
+  font-family:"Gantari", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:300;
+  margin-top:10px;
+  margin-bottom:0;
+  font-size:clamp(12px, 2.3vw, 20px);
+}
+
+/* contrast classes */
+.hero-content.light { color: #ffffff; }
+.hero-content.dark { color: #060606; }
+
+/* Section styles */
+.section{
+  max-width:var(--max-content-width);
+  margin:0 auto;
+  padding:80px var(--site-padding);
+  color: #eaeaea;
+}
+.section h2{
+  margin:0 0 18px 0;
+  font-size:28px;
+  letter-spacing:0.01em;
+}
+
+/* contact form (unchanged) */
+.contact-form{display:grid; gap:12px; max-width:700px;}
+.contact-form label{display:flex; flex-direction:column; font-size:13px; color: #ddd;}
+.contact-form input, .contact-form textarea{
+  margin-top:8px;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  color:inherit;
+  font-size:15px;
+  resize:vertical;
+}
+.contact-form button{
+  margin-top:6px;
+  padding:12px 16px;
+  border-radius:8px;
+  border:0;
+  background:#fff;
+  color:#120e0e;
+  font-weight:700;
+  cursor:pointer;
+  width:max-content;
+}
+
+/* Responsive / small screens */
+@media (max-width:640px){
+  .topbar{height:64px;}
+  .logo{left:12px; font-size:14px;}
+  .section{padding:56px 16px;}
+  .hamburger{width:48px;height:48px;}
+}
+
+/* accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .slide{transition:none;}
+}
+
+/* ---------- Productions section styles ---------- */
+/* Reduced space above PRODUCTIONS heading */
+.productions-section {
+  padding-top: 40px; /* reduced per your request */
+}
+
+
+/* list: vertical stack */
+.productions-list {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  gap: clamp(28px, 6vh, 72px); /* responsive vertical space between each .production-item */
+  padding-top: 12px;           /* optional tiny offset from the heading */
+}
+
+.productions-heading{
+  font-family: "Gantari", sans-serif;
+  font-weight: 800;
+  /* responsive: min 56px, scales with viewport, max 220px */
+  font-size: clamp(56px, 12.5vw, 100px) !important;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* each production: three-column like layout so poster starts visually centered in viewport */
+.production-item{
+  position: relative;
+  display: grid;
+  /* columns: left gutter | poster column | details column */
+  grid-template-columns: 1fr minmax(260px, 520px) minmax(320px, 520px);
+  align-items: center;
+  height: clamp(62vh, 78vh, 86vh);
+  overflow: visible;
+  align-content: center;
+}
+
+/* On small screens, stack (animation disabled in JS) */
+@media (max-width: 880px) {
+  .production-item {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 20px;
+    padding-bottom: 24px;
+  }
+}
+
+/* Poster container: now holds an <img> that stays uncropped */
+.production-poster{
+  grid-column: 2 / 3;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 8px;
+  transform-origin: center center;
+  transition: transform 300ms linear;
+  will-change: transform;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  background-color: transparent; /* posters are defined by the <img> now */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:visible; /* allow shadows outside */
+}
+
+/* img inside poster - preserve full image, no crop */
+.production-poster img{
+  display:block;
+  max-width:100%;
+  max-height:86vh;     /* matches the approximate max poster height from design */
+  height:auto;
+  width:auto;
+  object-fit:contain;  /* ensures the full image is visible, no cropping */
+  border-radius:8px;
+  box-shadow: inherit;
+}
+
+
+/* Details panel (right column) */
+.production-details{
+  grid-column: 3 / 4;
+  padding: 24px;
+  display:flex;
+  flex-direction:column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: center;
+  color: #eaeaea;
+  min-height: 220px;
+  opacity: 0;
+  transform: translateX(8%); /* starts slightly right */
+  transition: transform 420ms cubic-bezier(.2,.9,.3,1), opacity 420ms ease;
+}
+
+/* Title and logline */
+.production-title{
+  font-family: "Antic Didone", serif;
+  font-weight: 700;
+  font-size: clamp(20px, 3.5vw, 32px);
+  margin: 0;
+  color: #fff;
+}
+.production-logline{
+  margin: 0;
+  line-height:1.55;
+  font-size: clamp(14px, 1.9vw, 18px);
+  color: rgba(255,255,255,0.92);
+  white-space: pre-wrap;
+}
+
+/* when revealed */
+.production-item.revealed .production-details{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* mobile tweaks: stacked order poster -> title -> logline, details visible */
+@media (max-width: 880px){
+  .production-poster{
+    grid-column: auto;
+    max-width: 100%;
+    border-radius: 6px;
+    min-height: 320px;
+  }
+  .production-details{
+    grid-column: auto;
+    transform: translateX(0);
+    opacity:1;
+    padding:12px;
+  }
+}
