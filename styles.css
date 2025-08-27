@@ -371,3 +371,10 @@ body{
     padding:12px;
   }
 }
+
+.site-footer{
+  padding: 18px var(--site-padding);
+  width:100%;
+  color: #eaeaea;
+  background: transparent;
+}
