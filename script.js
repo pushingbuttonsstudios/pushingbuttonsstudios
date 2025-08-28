@@ -21,7 +21,11 @@ const IMAGES = [
   'phalke.jpg',
   'pinky.jpg',
   'secret.jpg',
-  'sline.jpg'
+  'sline.jpg',
+  // new posters added
+  'aakhri.jpg',
+  'betul.jpg',
+  'kinara.jpg'
 ];
 
 const INTERVAL = 3500; // EXACT 3.5s between slides
